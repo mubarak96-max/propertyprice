@@ -4,6 +4,9 @@ import numpy as np
 import pickle
 import category_encoders as ce
 import joblib
+from flask import Flask
+
+
 
 # def load_model():
 #     with open('propertypricepredictor2.pkl', 'rb') as file:
