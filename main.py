@@ -7,13 +7,6 @@ import joblib
 from flask import Flask
 
 
-
-# def load_model():
-#     with open('propertypricepredictor2.pkl', 'rb') as file:
-#         model = joblib.load(file, mmap_mode='r')
-#     return model
-
-
 with open('encoder.pkl', 'rb') as file:
     encoder = pickle.load(file)
 
@@ -24,22 +17,6 @@ def load_model():
         with open('propertypricepredictor1.pkl', 'rb') as file:
             return pickle.load(file)
 
-# Function to load and encode the data
-# @st.cache_resource
-# def load_and_encode_data():
-#     with st.spinner("Loading data and initializing encoder... Please wait."):
-#         data = pd.read_csv("data2.csv")
-        
-#         # List of categorical columns to encode
-#         categorical_columns = ['property_usage_en', 'property_sub_type_en', 'area_name_en', 'nearest_metro_en', 'rooms_en', 'trans_group_en']
-        
-#         # Initialize the binary encoder
-#         encoder = ce.BinaryEncoder(cols=categorical_columns)
-        
-#         # Fit the encoder with the original data
-#         encoder.fit(data)
-        
-#         return data, encoder
 
 # Load the model and data
 rf = load_model()
@@ -168,18 +145,6 @@ procedure_area = st.number_input('Property Area', min_value=0.0, step=1.0)
 
 
 has_parking = st.selectbox('Has Parking?', ['Yes', 'No',])
-
-
-# # List of categorical columns to encode
-# categorical_columns = ['property_usage_en', 'property_sub_type_en', 'area_name_en', 'nearest_metro_en', 'rooms_en', 'trans_group_en']
-
-# # Initialize the binary encoder
-# encoder = ce.BinaryEncoder(cols=categorical_columns)
-
-# # Fit the encoder with the original data
-# encoder.fit(data)
-
-# Fit the encoder with the original data (done once)
 
 
 # Prediction
