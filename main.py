@@ -22,7 +22,7 @@ def load_model():
 rf = load_model()
 # data, encoder = load_and_encode_data()
 
-st.title("Property Price Predictor")
+st.title("Property Price Estimator")
 
 # Select input options
 trans_group = st.selectbox('Transaction Type', ['Sales', 'Mortgages'])
