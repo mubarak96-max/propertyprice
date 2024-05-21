@@ -213,7 +213,7 @@ if st.button('Predict Price'):
         # Make prediction
         prediction = np.exp(rf.predict(query_encoded))
 
-        st.markdown(f"<h1 style='font-size:20px;'>Predicted price for this property is <span style='color:blue'>AED {int(prediction):,}</span> </h1>",
+        st.markdown(f"<h1 style='font-size:20px;'>Predicted price for this property is AED {int(prediction):,} </h1>",
     unsafe_allow_html=True)
 
 
