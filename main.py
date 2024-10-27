@@ -398,92 +398,116 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-st.title("Property Price Estimator")
+# st.title("Property Price Estimator")
 
-# Inject custom CSS and JavaScript for styling select boxes
+st.markdown("""
+<style>
+    /* Custom styling for title */
+    .big-title {
+        font-size: 30px !important;
+        color: #1E88E5 !important;
+        padding-bottom: 24px !important;
+        font-weight: bold !important;
+        text-align: center !important;
+    }
+</style>
+""", unsafe_allow_html=True)
 
+# Using markdown with HTML to apply custom styling
+st.markdown("<h1 class='big-title'>Property Price Estimator</h1>", unsafe_allow_html=True)
 
-# Define options and areas data
-transaction_types = ['Sales', 'Mortgages']
-property_types = ["Unit", "Villa", "Land", "Building"]
-property_usages = [
-    "Commercial", "Residential", "Hospitality", "Industrial", 
-    "Agricultural", "Multi-Use", "Storage", "Residential / Commercial", "Other"
-]
-areas = [
-    {"area_name_en": "Al Barsha First", "nearest_metro_en": ["Mall of the Emirates", "Mashreq"]},
-    {"area_name_en": "Downtown Dubai", "nearest_metro_en": ["Burj Khalifa/Dubai Mall", "Business Bay"]}
-]
-rooms_values = ["Studio", "1 B/R", "2 B/R", "3 B/R", "Office", "Others"]
-
-# Create Streamlit selectboxes
-trans_group = st.selectbox('Transaction Type', transaction_types)
-property_type_en = st.selectbox('Property Type', property_types)
-property_usage_en = st.selectbox('Property Usage', property_usages)
-area_name_en = st.selectbox("Location", [area["area_name_en"] for area in areas])
-
-# Handle dependent select box for nearest metro
-selected_location = next((area for area in areas if area["area_name_en"] == area_name_en), None)
-if selected_location:
-    nearest_metro = st.selectbox("Nearest Metro", selected_location["nearest_metro_en"])
-else:
-    nearest_metro = None
-
-rooms_value = st.selectbox('Rooms', rooms_values)
-procedure_area = st.number_input('Property Area', min_value=0.0, step=1.0)
+st.markdown("""
+<style>
+    /* Base style for select boxes */
+    div[data-baseweb="select"] > div:first-child {
+        border-color: #ccc !important;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    }
+    
+    /* Override all states to remove red */
+    div[data-baseweb="select"] > div:first-child,
+    div[data-baseweb="select"] > div:first-child:hover,
+    div[data-baseweb="select"] > div:first-child:active,
+    div[data-baseweb="select"] > div:first-child:focus,
+    div[data-baseweb="select"] > div:first-child[data-focusvisible="true"] {
+        border-color: rgb(173, 216, 230) !important;
+        box-shadow: none !important;
+    }
+    
+    /* Override hover state */
+    div[data-baseweb="select"]:hover > div:first-child {
+        border-color: rgb(173, 216, 230) !important;
+        box-shadow: 0 0 0 1px rgb(173, 216, 230) !important;
+    }
+    
+    /* Override focused/expanded state */
+    div[data-baseweb="select"] > div:first-child[aria-expanded="true"],
+    div[data-baseweb="select"] > div:first-child[data-focusvisible="true"] {
+        border-color: rgb(173, 216, 230) !important;
+        box-shadow: 0 0 0 2px rgb(173, 216, 230) !important;
+    }
+    
+    /* Style the options dropdown */
+    div[role="listbox"] {
+        border-color: rgb(173, 216, 230) !important;
+    }
+    
+    /* Style the selected option */
+    div[data-baseweb="select"] span[aria-selected="true"] {
+        background-color: rgba(173, 216, 230, 0.2) !important;
+    }
+    
+    /* Style the hovered option */
+    div[data-baseweb="select"] div[role="option"]:hover {
+        background-color: rgba(173, 216, 230, 0.1) !important;
+    }
+    
+    /* Number input styling */
+    input[type="number"] {
+        border-color: #ccc !important;
+    }
+    
+    input[type="number"]:hover,
+    input[type="number"]:focus {
+        border-color: rgb(173, 216, 230) !important;
+        box-shadow: 0 0 0 2px rgb(173, 216, 230) !important;
+    }
+    
+    /* Remove red outline on invalid state */
+    div[data-baseweb="select"] > div:first-child[aria-invalid="true"],
+    input[type="number"][aria-invalid="true"] {
+        border-color: rgb(173, 216, 230) !important;
+        box-shadow: none !important;
+    }
+</style>
+""", unsafe_allow_html=True)
 
 # Select input options
-# trans_group = st.selectbox('Transaction Type', ['Sales', 'Mortgages'])
-# property_type_en = st.selectbox('Property Type', ["Unit", "Villa", "Land", "Building"])
-# property_usage_en = st.selectbox('Property Usage', [
-#     "Commercial", "Residential", "Hospitality", "Industrial", 
-#     "Agricultural", "Multi-Use", "Storage", "Residential / Commercial", "Other"
-# ])
-# area_name_en = st.selectbox("Location", [area["area_name_en"] for area in areas])
+trans_group = st.selectbox('Transaction Type', ['Sales', 'Mortgages'])
+property_type_en = st.selectbox('Property Type', ["Unit", "Villa", "Land", "Building"])
+property_usage_en = st.selectbox('Property Usage', [
+    "Commercial", "Residential", "Hospitality", "Industrial", 
+    "Agricultural", "Multi-Use", "Storage", "Residential / Commercial", "Other"
+])
+area_name_en = st.selectbox("Location", [area["area_name_en"] for area in areas])
 
-# selected_location = next((area for area in areas if area["area_name_en"] == area_name_en), None)
+selected_location = next((area for area in areas if area["area_name_en"] == area_name_en), None)
 
-# nearest_metro = None
-# if selected_location:
-#     nearest_metro = st.selectbox("Nearest Metro", selected_location["nearest_metro_en"])
-
-
-# rooms_value = st.selectbox('Rooms', ["Studio", "1 B/R", "2 B/R", "3 B/R", "Office", "Others"])
-
-# procedure_area = st.number_input('Property Area', min_value=0.0, step=1.0)
+nearest_metro = None
+if selected_location:
+    nearest_metro = st.selectbox("Nearest Metro", selected_location["nearest_metro_en"])
 
 
+rooms_value = st.selectbox('Rooms', ["Studio", "1 B/R", "2 B/R", "3 B/R", "Office", "Others"])
 
-# has_parking = st.selectbox('Has Parking?', ['Yes', 'No',])
+procedure_area = st.number_input('Property Area', min_value=0.0, step=1.0)
 
 
-options = ["Yes", "No"]
 
-# Inject HTML and CSS for a custom-styled select box
-st.markdown("""
-    <style>
-    .custom-select {
-        font-size: 16px;
-        padding: 8px;
-        border-radius: 4px;
-        width: 100%;
-        border: 1px solid #ccc;
-        outline: none;
-    }
-    .custom-select:focus {
-        border: 2px solid green; /* Green border on focus */
-    }
-    </style>
-    <label for="hasParking">Has Parking?</label>
-    <select id="hasParking" class="custom-select">
-        <option value="Yes">Yes</option>
-        <option value="No">No</option>
-    </select>
-    """, unsafe_allow_html=True)
+has_parking = st.selectbox('Has Parking?', ['Yes', 'No',])
 
-# Capture the selected option with Streamlit's selectbox to use the value in Streamlit app logic
-has_parking = st.selectbox("Select Has Parking", options, key="parking_selectbox")
-st.write(f"You selected: {has_parking}")
+
+
 
 
 # Prediction
